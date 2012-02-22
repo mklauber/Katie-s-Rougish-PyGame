@@ -7,7 +7,7 @@ from items import Treasure
 from monsters import Monster
 
 class Map(object):
-	''' Stores the values for the map, but doesn't render it for the game. 
+	''' Stores the values for the map, but doesn't render it for the game.
 
 	    Map.cleared = The cleared squares
 	'''
@@ -40,18 +40,18 @@ class Map(object):
 				if not self.treasure[row][col] and not self.walls[row][col]:
 					self.monsters[row][col] = Monster()
 					break
-			
+
 	def get_blank_map(self):
 		''' Returns a map with all values set to 0
 		'''
-		return [ [0] * COLUMNS ] * ROWS
-	
+		return [ [0] * COLUMNS for i in range( ROWS ) ]
+
 	def is_block_empty(self, row, col):
 		if not self.treasure[row][col] and not self.monsters[row][col] and not self.walls[row][col]:
 			return True
 		else:
 			return False
-	
+
 	def set_current_position(self, position):
 		self.current = self.get_blank_map()
 		row, col = position
@@ -73,13 +73,13 @@ class Map(object):
 			if row+i < ROWS-1 and col-i > 0: self.current[row+i+1][col-i-1] = 1
 			if row+i < ROWS-1 and col+i < COLUMNS-1: self.current[row+i+1][col+i+1] = 1
 	def clear_block(self, position):
-		''' Given the current position of the player, sets the current square to completely cleared, 
+		''' Given the current position of the player, sets the current square to completely cleared,
 	    	    and the squares nearby to partially cleared.
 		'''
 		x, y = position
 		col = y/TILE_SIZE
 		row = x/TILE_SIZE
-		
+
 		self.cleared[row][col] = 1
 		if row < ROWS-1:
 			self.cleared[row+1][col] = 1
@@ -89,7 +89,7 @@ class Map(object):
 			self.cleared[row][col+1] = 1
 		if col > 0:
 			self.cleared[row][col-1] = 1
-	
+
 	def get_all_monsters(self):
 		monsters = {}
 		for row in range(ROWS):
@@ -100,7 +100,7 @@ class Map(object):
 
 	def clear_treasure(self, position):
 		''' Given a position, clears the treasure from it, and returns the treasure.
-		'''	
+		'''
 		x, y = position
 		row = x/TILE_SIZE
                 col = y/TILE_SIZE
